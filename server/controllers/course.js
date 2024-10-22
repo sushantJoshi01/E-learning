@@ -66,7 +66,6 @@ export const getMyCourses = TryCatch(async (req, res) => {
 
 export const checkout = TryCatch(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   const course = await Courses.findById(req.params.id);
 
   if (user.subscription.includes(course._id)) {
@@ -75,18 +74,22 @@ export const checkout = TryCatch(async (req, res) => {
     });
   }
 
-  const options = {
-    amount: Number(course.price * 100),
-    currency: "INR",
-  };
+  // Directly add the course to the user's subscription
+  user.subscription.push(course._id);
 
-  const order = await instance.orders.create(options);
+  await Progress.create({
+    course: course._id,
+    completedLectures: [],
+    user: req.user._id,
+  });
 
-  res.status(201).json({
-    order,
-    course,
+  await user.save();
+
+  res.status(200).json({
+    message: "Course purchased successfully",
   });
 });
+
 
 export const paymentVerification = TryCatch(async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =

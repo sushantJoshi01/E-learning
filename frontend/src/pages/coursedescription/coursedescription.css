@@ -42,3 +42,27 @@
     }
   }
 }
+.form-input {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-select {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.common-btn {
+  padding: 10px 15px;
+  background-color: #8a4baf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
